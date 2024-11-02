@@ -14,17 +14,44 @@ const App = () => {
   
   }
   const CameraRef = useRef<CameraView | null>(null);  
+  // let intervalref: number | undefined;
   
+  useEffect (()=> {
+    const intervalref = setInterval(async () => {
+      await takingFrame();
+    }, 1000); 
+
+    const timeout = setTimeout(() => {
+      if (intervalref){
+        clearInterval(intervalref); 
+       
+        console.log("stopped") ;
+      } 
+    }, 10000);
+
+    return () => {
+        
+      if(intervalref) {
+        clearInterval(intervalref);
+      }
+      
+      clearTimeout(timeout);
+    }; 
+  },[]); 
+
+
+
+
+
   const takingFrame  = async ()=> {
     if (CameraRef.current){
-        let photo = await CameraRef.current.takePictureAsync({base64: true, quality:0.8, skipProcessing: true}); 
-        console.log ("hello"); 
-        console.log(photo?.width);
-    } 
+        let photo = await CameraRef.current.takePictureAsync({base64: true, quality:0.8, skipProcessing: true, }); 
+        console.log("Base64 Image:", photo?.base64); 
+    }   
   }
   if (!permission) {
     // Camera permissions are still loading.
-    return <View />;
+    return <View></View>;
   }
   if (!permission?.granted) {
     <View style={styles.warning}>
@@ -42,7 +69,9 @@ const App = () => {
           <CameraView facing={type} style={styles.camera}
           ref={CameraRef}
           onCameraReady={takingFrame}
-          
+          flash={'off'}
+          mute={true}
+          autofocus={'on'}
           >
 
 
