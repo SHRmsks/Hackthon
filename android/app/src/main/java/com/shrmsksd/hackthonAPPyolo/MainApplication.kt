@@ -1,4 +1,4 @@
-package com.andriod
+package com.shrmsksd.hackthonAPPyolo
 
 import android.app.Application
 import android.content.res.Configuration

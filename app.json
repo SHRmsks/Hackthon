@@ -8,7 +8,8 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "splash": {
       "image": "./assets/images/splash.png",
@@ -17,14 +18,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ios"
+      "bundleIdentifier": "com.shrmsksd.hackthonAPPyolo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.andriod"
+      "package": "com.shrmsksd.hackthonAPPyolo"
     },
     "web": {
       "bundler": "metro",
