@@ -39,7 +39,9 @@ export default function App() {
         // Simulate real-time updates: For actual usage, replace this with WebSocket or API call
         const interval = setInterval(() => {
             setBoundingBoxes(JSON.parse(jsonString)); // Simulate an update with new data if available
-        }, 2000);
+        }, 2000); 
+         //async to api call 
+
 
         return () => clearInterval(interval); // Clean up interval on unmount
     }, []);
@@ -47,7 +49,7 @@ export default function App() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             {/* Background view simulating camera feed */}
-            <View style={{ width, height, backgroundColor: '#ccc' }} />
+            <View style={{ width, height, backgroundColor: 'transparent' }} />
 
             {/* Render bounding boxes for each object in the frame */}
             {boundingBoxes.map((box, index) => (

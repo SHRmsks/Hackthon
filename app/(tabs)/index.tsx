@@ -129,6 +129,8 @@ const App = () => {
           </Text>
         </View>
         <View style={styles.container}>
+          
+         
           <CameraView
             facing={type}
             style={styles.camera}
@@ -139,6 +141,8 @@ const App = () => {
             autofocus={"on"}
             animateShutter={false}
           >
+             <View style={{width: "100%", height: "100%", zIndex: 1}}>
+             <App1 /></View>
             <View style= {styles.buttons}>
             <TouchableOpacity style={styles.button} onPress={start}>
             {
@@ -156,10 +160,11 @@ const App = () => {
                   resizeMode="contain"
                 />
               </View>
+              
             </TouchableOpacity>
             </View>
           </CameraView>
-
+          
          
         </View>
       {/* </SafeAreaView> */}
@@ -195,11 +200,13 @@ flexWrap: "wrap",
     width: "100%",
     height: 50,
     flexDirection: "row",
-
+    zIndex: 3,
     justifyContent:"space-evenly"
   },
   camera: {
+    position: "absolute",
     flex: 1,
+    zIndex: -3,
     width: "95%",
     height: "100%",
     flexDirection: "column",
@@ -213,10 +220,11 @@ flexWrap: "wrap",
     width: "100%",
   },
   button: {
+    
     height: "100%",
     width: 120,
     justifyContent: "center",
-
+    zIndex: 3,
     backgroundColor: "#7bb096",
     borderRadius: 20,
   },
