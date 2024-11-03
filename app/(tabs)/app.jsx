@@ -3,48 +3,46 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
-// Example JSON string input with bounding box data
-const jsonString = `[
-    {
-        "minx": 0.2801480293273926,
-        "miny": 0.0753866657614708,
-        "width": 0.5721215009689331,
-        "height": 0.7381686568260193,
-        "label": "plastic"
-    },
-    {
-        "minx": 0.7302178740501404,
-        "miny": 0.21762925386428833,
-        "width": 0.268867164850235,
-        "height": 0.24840280413627625,
-        "label": "plastic"
-    },
-    {
-        "minx": 0.0005941867711953819,
-        "miny": 0.001147060887888074,
-        "width": 0.21895933151245117,
-        "height": 0.8656633496284485,
-        "label": "plastic"
-    }
-]`;
-
-export default function App() {
+export default function App({ response }) {
     const [boundingBoxes, setBoundingBoxes] = useState([]);
-
+    console.log("app data ", response);
     useEffect(() => {
-        // Parse the JSON string and update boundingBoxes state
-        const parsedData = JSON.parse(jsonString);
-        setBoundingBoxes(parsedData);
+        let parsedData = [];
+        
+        try {
+            // Check if `response` is a JSON string or an already parsed array
+            if (typeof response === 'string') {
+                parsedData = JSON.parse(response);
+            } else {
+                parsedData = response;
+            }
 
-        // Simulate real-time updates: For actual usage, replace this with WebSocket or API call
+            // Ensure parsedData is an array before setting it
+            if (Array.isArray(parsedData)) {
+                setBoundingBoxes(parsedData);
+            } else {
+                console.warn("Parsed data is not an array");
+                setBoundingBoxes([]); // Default to an empty array if data is invalid
+            }
+        } catch (error) {
+            console.error("Failed to parse JSON:", error);
+            setBoundingBoxes([]); // Set an empty array if parsing fails
+        }
+
+        // Simulate real-time updates (or replace with WebSocket/API call)
         const interval = setInterval(() => {
-            setBoundingBoxes(JSON.parse(jsonString)); // Simulate an update with new data if available
-        }, 2000); 
-         //async to api call 
-
+            try {
+                const updatedData = typeof response === 'string' ? JSON.parse(response) : response;
+                if (Array.isArray(updatedData)) {
+                    setBoundingBoxes(updatedData);
+                }
+            } catch (error) {
+                console.error("Failed to parse JSON on update:", error);
+            }
+        }, 2000);
 
         return () => clearInterval(interval); // Clean up interval on unmount
-    }, []);
+    }, [response]);
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
